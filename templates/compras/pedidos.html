@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Pedidos {% endblock %}
+
+{% block main %}
+
+{% include 'mensagens.html' %}
+
+{% include 'navbar.html' %}
+
+<center><h3>Pedidos</h3></center>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="box-element" id="form-wrapper">
+				<form id="form">
+					<div class="user-info">
+						<div class="form-field">
+							<input required class="form-control" type="text" name="name" placeholder="Nome..">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="email" name="email" placeholder="Email..">
+						</div>
+					</div>
+					
+					<div class="shipping-info">
+						<hr>
+							<h5>Informações para entrega</h5>
+							<hr>
+							<div class="form-field">
+								<input class="form-control" type="text" name="address" placeholder="Endereço..">
+							</div>
+							<div class="form-field">
+								<input class="form-control" type="text" name="city" placeholder="Cidade..">
+							</div>
+							<div class="form-field">
+								<input class="form-control" type="text" name="state" placeholder="Estado..">
+							</div>
+							<div class="form-field">
+								<input class="form-control" type="number" name="zipcode" placeholder="CEP..">
+							</div>
+					</div>
+
+					<hr>
+
+					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+				</form>
+			</div>
+
+			<br>
+			<div class="box-element hidden" id="payment-info">
+				<small>Paypal Opções</small>
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			<div class="box-element">
+				<a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Voltar ao Carrinho</a>
+		<hr>
+		<h3>Lista de pedidos</h3>
+		<hr>
+		<div class="cart-row">
+			<div style="flex:2"><img class="row-image" src="{% static 'imagens/2+placeholder.png' %}"></div>
+			<div style="flex:2"><p>Produto 1</p></div>
+			<div style="flex:1"><p>R$20.00</p></div>
+			<div style="flex:1"><p>x2</p></div>
+		</div>
+			<h5>Items: 2</h5>
+			<h5>Total: R$40</h5>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

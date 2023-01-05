@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+
+{% include 'mensagens.html' %}
+
+{% block title %} Pagamentos {% endblock %}
+
+<center><h1>Money</h1>
+    {{ form.render }}</center>
+    
+{% endblock %}
