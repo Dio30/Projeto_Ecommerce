@@ -2,20 +2,69 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from paypal.standard.forms import PayPalPaymentsForm
 import uuid
+import json
+from .models import *
 
 def home(request):
-    context = {}
+    if request.user.is_authenticated:
+        cliente = request.user.cliente
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
+        itens = pedido.pedidoitem_set.all()
+        cart_itens = pedido.pegar_carrinho_itens
+    else:
+        itens = []
+        pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
+        cart_itens = pedido['pegar_carrinho_itens']
+    produtos = Produto.objects.all()
+    context = {'produtos':produtos, 'cart_itens':cart_itens}
     return render(request, 'compras/home.html', context)
 
 def cart(request):
-    context = {}
+    if request.user.is_authenticated:
+        cliente = request.user.cliente
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
+        itens = pedido.pedidoitem_set.all()
+        cart_itens = pedido.pegar_carrinho_itens
+    else:
+        itens = []
+        pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
+        cart_itens = pedido['pegar_carrinho_itens']
+    context = {'itens':itens, 'pedido':pedido, 'cart_itens':cart_itens}
     return render(request, 'compras/cart.html', context)
 
 def pedido(request):
-    context = {}
+    if request.user.is_authenticated:
+        cliente = request.user.cliente
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
+        itens = pedido.pedidoitem_set.all()
+        cart_itens = pedido.pegar_carrinho_itens
+    else:
+        itens = []
+        pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
+        cart_itens = pedido['pegar_carrinho_itens']
+    context = {'itens':itens, 'pedido':pedido, 'cart_itens':cart_itens}
     return render(request, 'compras/pedidos.html', context)
+
+def updateItem(request):
+    data = json.loads(request.body)
+    produtoId = data['produtoId']
+    action = data['action']
+    cliente = request.user.cliente
+    produto = Produto.objects.get(id=produtoId)
+    pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
+    pedidoItem, criado = PedidoItem.objects.get_or_create(pedido=pedido, produto=produto)
+    if action == 'add':
+        pedidoItem.quantidade = (pedidoItem.quantidade + 1)
+    elif action == 'remove':
+        pedidoItem.quantidade = (pedidoItem.quantidade - 1)
+    pedidoItem.save()
+    
+    if pedidoItem.quantidade <= 0:
+        pedidoItem.delete()
+    return JsonResponse('Item foi adicionado com sucesso!', safe=False)
 
 def view_that_asks_for_money(request):
     host = request.get_host()
