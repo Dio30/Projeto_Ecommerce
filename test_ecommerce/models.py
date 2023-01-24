@@ -30,7 +30,7 @@ class Pedido(models.Model):
     id_transacao = models.CharField(max_length=100, null=True)
     
     def __str__(self):
-        return str(f"Pedido de {self.cliente}")
+        return f'Nº {self.id_transacao}'
     
     @property
     def envio(self):
@@ -60,7 +60,7 @@ class PedidoItem(models.Model):
     data_adicao = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return str(self.produto)
+        return str(f'Item {self.produto} pedido nº {self.pedido}')
     
     @property
     def pegar_total(self):

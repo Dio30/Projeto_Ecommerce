@@ -9,4 +9,5 @@ urlpatterns = [
     path('reverse/', views.paypal_reverse, name='paypal-reverse'),
     path('cancel/', views.paypal_cancel, name='paypal-cancel'),
     path('update_item/', views.updateItem, name='update_item'),
+    path('processo_pedido/', views.processo_pedido, name='processo_pedido'),
 ]

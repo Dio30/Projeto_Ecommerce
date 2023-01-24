@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from paypal.standard.forms import PayPalPaymentsForm
 import uuid
 import json
+import datetime
 from .models import *
 
 def home(request):
@@ -65,6 +66,32 @@ def updateItem(request):
     if pedidoItem.quantidade <= 0:
         pedidoItem.delete()
     return JsonResponse('Item foi adicionado com sucesso!', safe=False)
+
+def processo_pedido(request):
+    id_transacao = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+    
+    if request.user.is_authenticated:
+        cliente = request.user.cliente
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
+        total = float(data['form']['total'])
+        pedido.id_transacao = id_transacao
+        
+        if total == float(pedido.pegar_carrinho_total):
+            pedido.complete = True
+        pedido.save()
+        
+        if pedido.envio == True:
+            EnderecoEnvio.objects.create(
+                cliente=cliente,
+                pedido=pedido,
+                endereco=data['envio']['address'],
+                cidade=data['envio']['city'],
+                estado=data['envio']['state'],
+                cep=data['envio']['zipcode'],
+                )
+    return JsonResponse('Pagamento realizado!', safe=False)
+    
 
 def view_that_asks_for_money(request):
     host = request.get_host()
