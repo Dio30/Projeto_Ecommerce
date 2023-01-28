@@ -1,20 +1,19 @@
-from django.urls import reverse
-from django.conf import settings
-from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
-from paypal.standard.forms import PayPalPaymentsForm
-import uuid
+from django.contrib.auth.decorators import login_required
 import json
-import datetime
+import requests
+from datetime import datetime
 from .models import *
 
+@login_required(redirect_field_name='cadastro/login.html')
 def home(request):
     if request.user.is_authenticated:
-        cliente = request.user.cliente
+        cliente = request.user
         pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
         itens = pedido.pedidoitem_set.all()
         cart_itens = pedido.pegar_carrinho_itens
+        
     else:
         itens = []
         pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
@@ -23,40 +22,31 @@ def home(request):
     context = {'produtos':produtos, 'cart_itens':cart_itens}
     return render(request, 'compras/home.html', context)
 
+
 def cart(request):
     if request.user.is_authenticated:
-        cliente = request.user.cliente
+        cliente = request.user
         pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
         itens = pedido.pedidoitem_set.all()
         cart_itens = pedido.pegar_carrinho_itens
+        
     else:
         itens = []
         pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
         cart_itens = pedido['pegar_carrinho_itens']
+    
     context = {'itens':itens, 'pedido':pedido, 'cart_itens':cart_itens}
     return render(request, 'compras/cart.html', context)
-
-def pedido(request):
-    if request.user.is_authenticated:
-        cliente = request.user.cliente
-        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
-        itens = pedido.pedidoitem_set.all()
-        cart_itens = pedido.pegar_carrinho_itens
-    else:
-        itens = []
-        pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
-        cart_itens = pedido['pegar_carrinho_itens']
-    context = {'itens':itens, 'pedido':pedido, 'cart_itens':cart_itens}
-    return render(request, 'compras/pedidos.html', context)
 
 def updateItem(request):
     data = json.loads(request.body)
     produtoId = data['produtoId']
     action = data['action']
-    cliente = request.user.cliente
+    cliente = request.user
     produto = Produto.objects.get(id=produtoId)
     pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
     pedidoItem, criado = PedidoItem.objects.get_or_create(pedido=pedido, produto=produto)
+
     if action == 'add':
         pedidoItem.quantidade = (pedidoItem.quantidade + 1)
     elif action == 'remove':
@@ -67,20 +57,37 @@ def updateItem(request):
         pedidoItem.delete()
     return JsonResponse('Item foi adicionado com sucesso!', safe=False)
 
+@login_required(redirect_field_name='cadastro/login.html')
+def pedido(request):
+    if request.user.is_authenticated:
+        cliente = request.user
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
+        itens = pedido.pedidoitem_set.all()
+        cart_itens = pedido.pegar_carrinho_itens
+        
+    else:
+        itens = []
+        pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
+        cart_itens = pedido['pegar_carrinho_itens']
+        
+    context = {'itens':itens, 'pedido':pedido, 'cart_itens':cart_itens}
+    return render(request, 'compras/pedidos.html', context)
+
 def processo_pedido(request):
-    id_transacao = datetime.datetime.now().timestamp()
+    id_transacao = datetime.now().timestamp()
     data = json.loads(request.body)
     
     if request.user.is_authenticated:
-        cliente = request.user.cliente
+        cliente = request.user
         pedido, criado = Pedido.objects.get_or_create(cliente=cliente, complete=False)
-        total = float(data['form']['total'])
         pedido.id_transacao = id_transacao
-        
-        if total == float(pedido.pegar_carrinho_total):
+        total = float(data['form']['total'])
+        carrinho = float(pedido.pegar_carrinho_total)
+    
+        if total == carrinho:
             pedido.complete = True
-        pedido.save()
-        
+            pedido.save()
+       
         if pedido.envio == True:
             EnderecoEnvio.objects.create(
                 cliente=cliente,
@@ -90,31 +97,26 @@ def processo_pedido(request):
                 estado=data['envio']['state'],
                 cep=data['envio']['zipcode'],
                 )
-    return JsonResponse('Pagamento realizado!', safe=False)
+    return JsonResponse('Pagamento Aceito!', safe=False)
+
+@login_required(redirect_field_name='cadastro/login.html')
+def endereco(request):
+    cep = request.GET.get('zipcode')
+    try:
+        link = f'https://cep.awesomeapi.com.br/json/{cep}'
+        requisicao = requests.get(link)
+        resposta = requisicao.json()
+        endereco = resposta['address']
+        estado = resposta['state']
+        cidade = resposta['city']
+    except:
+        return render(request, 'compras/endereco.html')
     
+    context = {
+            'zipcode': cep,
+            'address': endereco,
+            'state': estado,
+            'city': cidade,
+            }
 
-def view_that_asks_for_money(request):
-    host = request.get_host()
-    paypal_dict = {
-        "business": settings.PAYPAL_RECEIVER_EMAIL,
-        "amount": "20.00",
-        "item_name": "Product 1",
-        "currency_code": "BRL",
-        "invoice": str(uuid.uuid4()),
-        "notify_url": f"http://{host}{reverse('paypal-ipn')}",
-        "return": f"http://{host}{reverse('paypal-reverse')}",
-        "cancel_return": f"http://{host}{reverse('paypal-cancel')}",
-        "custom": "premium_plan",
-    }
-
-    form = PayPalPaymentsForm(initial=paypal_dict)
-    context = {"form": form}
-    return render(request, "compras/pagamentos.html", context)
-
-def paypal_reverse(request):
-    messages.success(request, 'Seu pagamento foi aceito com sucesso.')
-    return redirect('pagamento')
-
-def paypal_cancel(request):
-    messages.error(request, 'Seu pagamento foi recusado!')
-    return redirect('pagamento')
+    return render(request, 'compras/endereco.html', context)

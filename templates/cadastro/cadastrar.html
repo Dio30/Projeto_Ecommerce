@@ -2,13 +2,14 @@
 
 {% load static %}
 
+{% block title %} Pedidos {% endblock %}
+
 {% block main %}
 
 {% include 'mensagens.html' %}
 
-{% block title %} Pagamentos {% endblock %}
+{% include 'navbar.html' %}
 
-<center><h1>Money</h1>
-    {{ form.render }}</center>
-    
+{{form.as_p}}
+
 {% endblock %}

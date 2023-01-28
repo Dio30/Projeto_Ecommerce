@@ -34,3 +34,37 @@ function updateUserPedido(produtoId, action){
         location.reload()
     })
 }
+
+function mostrarSenha(){
+
+	var tipo = document.getElementById('senha');
+	const btn = document.querySelector('.icon');
+
+	if (tipo.type == 'password') 
+	{
+		tipo.type = 'text'
+		btn.src = 'static/imagens/eye-off.svg'
+	}
+	else
+	{
+		tipo.type = 'password'
+		btn.src = 'static/imagens/eye.svg'
+	}
+}
+
+function mostrarSenha1(){
+
+	var tipo1 = document.getElementById('senha1');
+	const btn1 = document.querySelector('.icon1');
+
+	if (tipo1.type == 'password') 
+	{
+		tipo1.type = 'text'
+		btn1.src = '/static/imagens/eye-off.svg'
+	}
+	else
+	{
+		tipo1.type = 'password'
+		btn1.src = '/static/imagens/eye.svg'
+	}
+}

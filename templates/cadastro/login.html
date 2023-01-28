@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block main %}
+
+{% include 'mensagens.html' %}
+
+{% include 'navbar.html' %}
+
+<div class="form-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card shadow-lg border-1 rounded-lg mt-4">
+                    <div class="card-header justify-content-center mycardheader">
+                        <h2 class="font-weight-dark text-center">Login | Ecommerce</h2>
+                    </div>
+                    <div class="card-body mybody">
+                        <form method="POST" autocomplete="off">
+                            {% csrf_token %}
+
+                                {% if form.non_field_errors %}
+                                    {% for error in form.non_field_errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        Usuário ou senha incorretos, tente novamente.
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}
+
+                            <div class="form-label-group">
+                                <span class="fa fa-user user"></span>
+                                <input name="username" type="text" placeholder="Usuário" class="form-control" 
+                                autocapitalize= "off" autofocus required>
+                                <label>Usuário</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                <span class="fa fa-lock"></span>
+                                <input name="password" type="password" placeholder="Senha" id="senha" class="form-control" required>
+                                <label>Senha</label>
+                                <img src="{% static 'imagens/eye.svg' %}" class="icon" onclick="mostrarSenha()">
+                            </div>
+                            <center><button type="submit" class="btn btn-lg btn-dark mybtn btn_submit">Entrar
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button></center>
+                            <br>
+                            <center>Não tem uma conta? <a href="{% url 'cadastrar' %}" class="super_a">Cadastre-se aqui</a>.</center>
+                            <input type="hidden" name="next" value="{{ next }}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

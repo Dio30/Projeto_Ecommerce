@@ -22,7 +22,7 @@
 
 				<button data-product="{{ produto.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add ao carrinho</button>
 				<a class="btn btn-outline-success" href="#">Detalhes</a>
-				<h4 style="float: right"><strong>R${{ produto.preco|floatformat:2 }}</strong></h4>
+				<h4 style="float: right"><strong>R$ {{ produto.preco }}</strong></h4>
             </div>
         </div>
         {% endfor %}

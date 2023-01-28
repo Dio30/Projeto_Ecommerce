@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'paypal.standard.ipn',
     'test_ecommerce',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
@@ -140,5 +140,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-PAYPAL_TEST = False
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
+SESSION_COOKIE_AGE = 3600 # tempo que o usuário fica autenticado, depois disso volta para pagina de login (1 hora)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-u47ez924783844@business.example.com' # email de quem vai receber o dinheiro

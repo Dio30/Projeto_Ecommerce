@@ -2,31 +2,45 @@
 
 {% load static %}
 
-{% block title %} Home {% endblock %}
-
 {% block main %}
 
-{% include 'mensagens.html' %}
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{% url 'home' %}">ShopTime</a>
+    {% if user.is_authenticated %}
+    <a class="navbar-brand" href="{% url 'home' %}">Olá {{ user.username }}</a>
+    {% else %}
+    <a class="navbar-brand" href="#">ShopTime</a>
+    {% endif %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+    
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'pedidos' %}">Pedidos</a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'endereco' %}" target="_blank">Pesquisar CEP</a>
+        </li>
+        {% else %}
+        {% endif %}
       </ul>
       <div class="form-inline my-2 my-lg-0">
-        <a href="#" class="btn btn-warning btn-sm">Login</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Sair</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-warning btn-sm">Login</a>
+        {% endif %}
+        
+        {% if user.is_authenticated %}
         <a href="{% url 'cart' %}"><img src="{% static 'imagens/6+cart.png'%}" id="cart-icon"></a>
         <p id="cart-total">{{ cart_itens }}</p>
+        {% else %}
+        {% endif %}
       </div>
     </div>
   </nav>
