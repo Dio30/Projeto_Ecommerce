@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 class Produto(models.Model):
     nome = models.CharField(max_length=200, null=True)
@@ -16,7 +16,7 @@ class Produto(models.Model):
             return self.imagem.url
     
 class Pedido(models.Model):
-    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     data_pedido = models.DateTimeField(auto_now_add=True, verbose_name='Data do pedido')
     complete = models.BooleanField(default=False, null=False, blank=False, verbose_name='Pedido foi Completado')
     id_transacao = models.CharField(max_length=100, null=False, blank=False, verbose_name='Código da Transação')
@@ -64,7 +64,7 @@ class PedidoItem(models.Model):
         return total
     
 class EnderecoEnvio(models.Model):
-    cliente = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     pedido = models.ForeignKey(Pedido, on_delete=models.SET_NULL, null=True, blank=True)
     endereco = models.CharField(max_length=200, null=True)
     cidade = models.CharField(max_length=200, null=True)

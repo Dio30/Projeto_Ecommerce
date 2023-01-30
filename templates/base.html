@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mstyle.css' %}">
     <link rel="shortcut icon" href="{% static 'imagens/6+cart.png' %}" type="image/x-icon">
 </head>
 <body>
@@ -42,5 +42,27 @@
         }
         var csrftoken = get_token('csrftoken');
     </script>
+    <script type="text/javascript">
+        var button = document.getElementById("search-button");
+        
+        button.onclick = function() {
+            var cep = document.getElementById("cep-input").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://cep.awesomeapi.com.br/json/' + cep);
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                document.getElementById("address").value = data.address;
+                document.getElementById("city").value = data.city;
+                document.getElementById("state").value = data.state;
+                console.log(data)
+                console.log(data.address)
+                console.log(data.city)
+                console.log(data.state)
+            }
+            };
+            xhr.send();
+        }
+        </script>
 </body>
 </html>

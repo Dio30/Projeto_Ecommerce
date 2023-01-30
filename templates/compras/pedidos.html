@@ -32,19 +32,24 @@
 						<hr>
 						<center><h5>Informações para entrega</h5></center>
 						<hr>
-						<div class="form-field">
-							<input required class="form-control" type="text" name="address" placeholder="Endereço.." value="{{ address }}">
+						<div class="form-label-group">
+							<input required class="form-control" type="text" name="address" placeholder="Endereço.." id="address" value="{{ user.endereco }}">
+							<label for="inputUser">Endereço</label>
 						</div>
-						<div class="form-field">
-							<input required class="form-control" type="text" name="city" placeholder="Cidade.." value="{{ city }}">
+						<div class="form-label-group">
+							<input required class="form-control" type="text" name="city" placeholder="Cidade.." id="city" value="{{ user.cidade }}">
+							<label for="inputUser">Cidade</label>
 						</div>
-						<div class="form-field">
-							<input required class="form-control" type="text" name="state" placeholder="Estado.." value="{{ state }}">
+						<div class="form-label-group">
+							<input required class="form-control" type="text" name="state" placeholder="Estado.." id="state" value="{{ user.estado }}">
+							<label for="inputUser">Estado</label>
 						</div>
-						<div class="form-field">
-							<input required class="form-control" type="number" name="zipcode" placeholder="CEP.." value="{{ zipcode }}">
+						<div class="form-label-group">
+							<input required class="form-control" type="number" name="zipcode" placeholder="CEP.." id="cep-input" value="{{ user.cep }}">
+							<label for="inputUser">CEP</label>
+							<button class="button2" type="button" id="search-button"><i class="fa fa-search" aria-hidden="true" 
+                            title="Buscar CEP"></i></button>
 						</div>
-						<center>Não sabe o CEP? <a href="{% url 'endereco' %}" target="_blank">Clique aqui</a></center>	
 					</div>
 
 					<hr>
@@ -97,7 +102,7 @@
 <script src="https://www.paypal.com/sdk/js?client-id=AXUbdkAIbLJ6Njuq4mXVbxCM6AqEGMKQZueHqV6fbuRxOjN20BxOh3kvbsHU_DU-HIcSfV9dKpyzVDn4&currency=BRL&disable-funding=mercadopago"></script>
 
 <script>
-	var total = parseFloat('{{ pedido.pegar_carrinho_total }}')
+	var total = parseInt('{{ pedido.pegar_carrinho_total }}')
 	const paypalButtonsComponent = paypal.Buttons({
 		// optional styling for buttons
 		// https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
@@ -112,7 +117,7 @@
 				purchase_units: [
 					{
 						amount: {
-							value: total.toFixed(2)
+							value: parseFloat(total).toFixed(2)
 						}
 					}
 				]

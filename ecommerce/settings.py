@@ -82,6 +82,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
+AUTH_USER_MODEL = 'usuarios.User'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -146,6 +147,8 @@ LOGOUT_REDIRECT_URL = 'login'
 
 SESSION_COOKIE_AGE = 3600 # tempo que o usuário fica autenticado, depois disso volta para pagina de login (1 hora)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-u47ez924783844@business.example.com' # email de quem vai receber o dinheiro

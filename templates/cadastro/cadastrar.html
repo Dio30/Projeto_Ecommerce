@@ -2,14 +2,167 @@
 
 {% load static %}
 
-{% block title %} Pedidos {% endblock %}
+{% block title %} Novo Usuário {% endblock %}
 
 {% block main %}
 
-{% include 'mensagens.html' %}
-
 {% include 'navbar.html' %}
 
-{{form.as_p}}
+{% include 'mensagens.html' %}
 
+<div class="form-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-1 rounded-lg mt-3 my-4">
+                    <div class="card-header justify-content-center mycardheader">
+                        <h3 class="font-weight-dark text-center">Cadastrar Novo Usuário</h3>
+                    </div>
+                    <div class="card-body mybody">
+                        <form action="{% url 'cadastrar' %}" method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-label-group">
+                                <span class="fa fa-user user"></span>
+                                <input type="text" name="username" minlength="3" class="form-control" id="inputUser" spellcheck="off" 
+                                placeholder="Usuário" autocapitalize= "off" autofocus required>
+                                <label for="inputUser">Usuário</label>
+                                {% if form.username.errors %}
+                                  <style>
+                                    .form-label-group .form-control {
+                                        border: 3px solid #e11010;
+                                    }
+                                    .user{
+                                        color: #e11010;
+                                    }
+                                    .form-label-group label{
+                                        position: absolute;
+                                        left: 3px;
+                                    }
+                                    </style>
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                    {% for error in form.username.errors %}
+                                        <p class='mytext'>{{ error }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                                <p class="text_muted2">Obrigatório 3 caracteres ou mais. Letras, números e @/./+/-/_ apenas.</p>
+                            </div>
+                           
+                            <div class="form-label-group1">
+                                <span class="fa fa-envelope envelope3"></span>
+                                <input type="email" name="email" class="form-control" id="inputUser" 
+                                placeholder="Email" autocapitalize= "off" value="@gmail.com">
+                                <label for="inputUser">Email</label>
+                                
+                                {% if form.email.errors %}
+                                    <style>
+                                    .form-label-group1 .form-control {
+                                        border: 3px solid #e11010;
+                                    }
+                                    .envelope3{
+                                        color: #e11010;
+                                    }
+                                    .form-label-group1 label{
+                                        position: absolute;
+                                        left: 3px;
+                                    }
+                                    </style>
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                    {% for error in form.email.errors %}
+                                      <p class='mytext'>{{ error }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                                <p class="text_muted2">Insira um email valido. Ex: exemplo@exemplo.com</p>
+                            </div>
+
+                            <div class="form-label-group">
+                                <span class="fa fa-map-marker envelope3"></span>
+                                <input type="text" name='cep' class="form-control" id="cep-input" 
+                                placeholder="CEP" autocapitalize= "off" maxlength="8" required>
+                                <label for="inputUser">CEP</label>
+                                <button class="button1" type="button" id="search-button"><i class="fa fa-search" aria-hidden="true" 
+                                title="Buscar CEP"></i></button>
+                                <p class="text_muted2">{{ form.cep.help_text }}</p>
+                            </div>
+
+                            <div class="form-label-group">
+                                <span class="fa fa-map-marker envelope3"></span>
+                                <input type="text" name="endereco" class="form-control" id="address" value=''
+                                placeholder="Endereço" autocapitalize= "off" required>
+                                <label for="inputUser">Endereço</label>
+                                <p class="text_muted2">{{ form.endereco.help_text }}</p>
+                            </div>
+
+                            <div class="form-label-group">
+                                <span class="fa fa-map-marker envelope3"></span>
+                                <input type="text" name="cidade" class="form-control" id="city" value=''
+                                placeholder="Cidade" autocapitalize= "off" required>
+                                <label for="inputUser">Cidade</label>
+                                <p class="text_muted2">{{ form.cidade.help_text }}</p>
+                            </div>
+
+                            <div class="form-label-group">
+                                <span class="fa fa-map-marker envelope3"></span>
+                                <input type="text" name="estado" class="form-control" id="state" value=''
+                                placeholder="Estado" autocapitalize= "off" required>
+                                <label for="inputUser">Estado</label>
+                                <p class="text_muted2">{{ form.estado.help_text }}</p>
+                            </div>
+                            
+                            <div class="form-label-group2">
+                                <span class="fa fa-lock"></span>
+                                <input type="password" name="password1" class="form-control" id="senha1" 
+                                placeholder="Senha" required>
+                                <label>Senha</label>
+                                <img src="{% static 'imagens/eye.svg' %}" class="icon" onclick="mostrarSenha1()">
+                                <ul class="text_muted2" style="margin-top: 1rem;">
+                                    <li>Sua senha não pode ser muito parecida com o nome do usuário ou email.</li>
+                                    <li>Sua senha precisa conter pelo menos 9 caracteres.</li>
+                                    <li>Sua senha não pode ser uma senha comumente utilizada. Ex: aaa, bbb, 1234..., etc.</li>
+                                    <li>Sua senha não pode ser inteiramente numérica, use letras juntamente de números ou 
+                                    caracteres especiais como @/./+/-/_</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="form-label-group2">
+                                <span class="fa fa-lock"></span>
+                                <input type="password" name="password2" class="form-control" id="senha2" 
+                                placeholder="Confirme sua senha" required>
+                                <label>Confirmar Senha</label>
+                                <img src="{% static 'imagens/eye.svg' %}" class="icon" id="icon" onclick="mostrarSenha2()">
+                                <p class="text_muted2">Informe a mesma senha informada anteriormente, para verificação.</p>
+                                {% if form.password2.errors %}
+                                    <style>
+                                    .form-label-group2 .form-control {
+                                        border: 3px solid #e11010;
+                                    }
+                                    .fa-lock{
+                                        color: #e11010;
+                                    }
+                                    .form-label-group2 label{
+                                        position: absolute;
+                                        left: 3px;
+                                    }
+
+                                    </style>
+                                  {% for error in form.password2.errors %}
+                                      <p class='mytext'>{{ error }}</p>
+                                  {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <button type="submit" class="btn btn-dark mybtn btn_submit">Cadastrar
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <a href="{% url 'login' %}" class="btn btn-primary mx-3 mybtn btn_submit" 
+                            style="position:absolute; right:1px;">Voltar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -6,9 +6,9 @@
 
 {% block main %}
 
-{% include 'mensagens.html' %}
-
 {% include 'navbar.html' %}
+
+{% include 'mensagens.html' %}
 
 <div class="form-content">
     <div class="container">
@@ -50,7 +50,7 @@
                                 <span></span>
                             </button></center>
                             <br>
-                            <center>Não tem uma conta? <a href="{% url 'cadastrar' %}" class="super_a">Cadastre-se aqui</a>.</center>
+                            <center>Não tem uma conta? <a href="{% url 'cadastrar' %}">Cadastre-se aqui</a>.</center>
                             <input type="hidden" name="next" value="{{ next }}">
                         </form>
                     </div>

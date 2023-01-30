@@ -160,6 +160,13 @@ h1,h2,h3,h4,h5,h6{
 	cursor: pointer;
   }
 
+  .fa-exclamation-circle{
+    color: #e11010;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
   .mycardheader{ /* para deixar os itens no card-header na cor definida */
     background: #bbbbbb;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -276,6 +283,19 @@ h1,h2,h3,h4,h5,h6{
     left: 10px;
   }
 
+.button1{
+  position: absolute;
+  bottom: 3.6rem;
+  right: 10px
+}
+
+.button2{
+  position: absolute;
+  bottom: 0.50rem;
+  left: 29rem;
+  font-size: 110%;
+}
+
 .fa-book{
   position: absolute;
     top: 15px;
@@ -345,10 +365,24 @@ h1,h2,h3,h4,h5,h6{
 }
   
 .envelope3{ /* icon email na registro */
-    position: absolute;
-    top: .99rem;
-    left: 10px;
-    font-size: 85%;
+  position: absolute;
+  top: .99rem;
+  left: 10px;
+}
+
+.mytext{ /* para os erros de formulario */
+  color:#e11010;
+  list-style-type: none;
+}
+
+.text_muted2{ /* para os textos de ajuda */
+  color:#424242;
+}
+
+.text-muted{ /* para os textos de ajuda */
+  font-size: 100%;
+  font-weight: bold;
+  color: #484848!important;
 }
 
 .fa-gamepad{ /* icon jogo em cadastrar/editar */
@@ -478,3 +512,249 @@ h1,h2,h3,h4,h5,h6{
       color: #777;
     }
   }
+
+/*form-label-group1*/
+
+.form-label-group1{ /* suporte para o login dinamico */
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-label-group1 input:hover{ /* para quando passar o mouse no campo selecionado */
+background: #eeeded;
+color: #000000;
+}
+
+.form-label-group1 input,
+.form-label-group1 label { /* suporte para o login dinamico */
+  height: 3.125rem;
+  padding: .75rem;
+  padding-right: 50px;
+  padding-left: 30px;
+  border-radius: 15px;
+}
+
+.form-label-group1 label { /* suporte para o login dinamico */
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495657;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: 1.25rem;
+  transition: all .1s ease-in-out;
+  font-size: 90%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-label-group1 input::-webkit-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group1 input::-moz-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group1 input:-ms-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group1 input::-ms-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group1 input::placeholder { /* suporte para o login dinamico */
+  color: transparent;
+  
+}
+
+.form-label-group1 input:not(:-moz-placeholder-shown) { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group1 input:not(:-ms-input-placeholder) { /* suporte para o login dinamico */
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group1 input:not(:placeholder-shown) { /* suporte para o login dinamico */
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group1 input:not(:-moz-placeholder-shown) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group1 input:not(:-ms-input-placeholder) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group1 input:not(:placeholder-shown) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+}
+
+.form-label-group1 input:-webkit-autofill ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) { /* suporte para o login dinamico */
+  .form-label-group1 { /* suporte para o login dinamico */
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+
+  .form-label-group1 label { /* suporte para o login dinamico */
+    position: static;
+  }
+
+  .form-label-group1 input::-ms-input-placeholder { /* suporte para o login dinamico */
+    color: #777;
+  }
+}
+
+/*form-label-group2*/
+
+.form-label-group2{ /* suporte para o login dinamico */
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-label-group2 input:hover{ /* para quando passar o mouse no campo selecionado */
+background: #eeeded;
+color: #000000;
+}
+
+.form-label-group2 input,
+.form-label-group2 label { /* suporte para o login dinamico */
+  height: 3.125rem;
+  padding: .75rem;
+  padding-right: 50px;
+  padding-left: 30px;
+  border-radius: 15px;
+}
+
+.form-label-group2 label { /* suporte para o login dinamico */
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495657;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: 1.25rem;
+  transition: all .1s ease-in-out;
+  font-size: 90%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-label-group2 input::-webkit-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group2 input::-moz-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group2 input:-ms-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group2 input::-ms-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group2 input::placeholder { /* suporte para o login dinamico */
+  color: transparent;
+  
+}
+
+.form-label-group2 input:not(:-moz-placeholder-shown) { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group2 input:not(:-ms-input-placeholder) { /* suporte para o login dinamico */
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group2 input:not(:placeholder-shown) { /* suporte para o login dinamico */
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group2 input:not(:-moz-placeholder-shown) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group2 input:not(:-ms-input-placeholder) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group2 input:not(:placeholder-shown) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+}
+
+.form-label-group2 input:-webkit-autofill ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) { /* suporte para o login dinamico */
+  .form-label-group2 { /* suporte para o login dinamico */
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+
+  .form-label-group2 label { /* suporte para o login dinamico */
+    position: static;
+  }
+
+  .form-label-group2 input::-ms-input-placeholder { /* suporte para o login dinamico */
+    color: #777;
+  }
+}

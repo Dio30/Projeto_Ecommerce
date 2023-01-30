@@ -22,7 +22,7 @@ def home(request):
     context = {'produtos':produtos, 'cart_itens':cart_itens}
     return render(request, 'compras/home.html', context)
 
-
+@login_required(redirect_field_name='cadastro/login.html')
 def cart(request):
     if request.user.is_authenticated:
         cliente = request.user
@@ -32,12 +32,13 @@ def cart(request):
         
     else:
         itens = []
-        pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'envio':False}
+        pedido = {'pegar_carrinho_total':0, 'pegar_carrinho_itens':0, 'itens':itens,'envio':False}
         cart_itens = pedido['pegar_carrinho_itens']
     
     context = {'itens':itens, 'pedido':pedido, 'cart_itens':cart_itens}
     return render(request, 'compras/cart.html', context)
 
+@login_required(redirect_field_name='cadastro/login.html')
 def updateItem(request):
     data = json.loads(request.body)
     produtoId = data['produtoId']
@@ -73,6 +74,7 @@ def pedido(request):
     context = {'itens':itens, 'pedido':pedido, 'cart_itens':cart_itens}
     return render(request, 'compras/pedidos.html', context)
 
+@login_required(redirect_field_name='cadastro/login.html')
 def processo_pedido(request):
     id_transacao = datetime.now().timestamp()
     data = json.loads(request.body)
@@ -98,25 +100,3 @@ def processo_pedido(request):
                 cep=data['envio']['zipcode'],
                 )
     return JsonResponse('Pagamento Aceito!', safe=False)
-
-@login_required(redirect_field_name='cadastro/login.html')
-def endereco(request):
-    cep = request.GET.get('zipcode')
-    try:
-        link = f'https://cep.awesomeapi.com.br/json/{cep}'
-        requisicao = requests.get(link)
-        resposta = requisicao.json()
-        endereco = resposta['address']
-        estado = resposta['state']
-        cidade = resposta['city']
-    except:
-        return render(request, 'compras/endereco.html')
-    
-    context = {
-            'zipcode': cep,
-            'address': endereco,
-            'state': estado,
-            'city': cidade,
-            }
-
-    return render(request, 'compras/endereco.html', context)
