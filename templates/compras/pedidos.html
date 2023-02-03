@@ -6,8 +6,6 @@
 
 {% block main %}
 
-{% include 'mensagens.html' %}
-
 {% include 'navbar.html' %}
 
 <center><h3>Pedidos</h3></center>
@@ -41,11 +39,17 @@
 							<label for="inputUser">Cidade</label>
 						</div>
 						<div class="form-label-group">
+							<input required type="text" name="district" class="form-control" id="district" value='{{ user.bairro }}' placeholder="Bairro" >
+							<label for="inputUser">Bairro</label>
+							<p class="text_muted2">{{ form.bairro.help_text }}</p>
+						</div>
+						<div class="form-label-group">
 							<input required class="form-control" type="text" name="state" placeholder="Estado.." id="state" value="{{ user.estado }}">
 							<label for="inputUser">Estado</label>
 						</div>
+						<p id="error-message" style="display: none;"></p>
 						<div class="form-label-group">
-							<input required class="form-control" type="number" name="zipcode" placeholder="CEP.." id="cep-input" value="{{ user.cep }}">
+							<input required class="form-control" type="text" name="zipcode" placeholder="CEP.." id="cep-input" value="{{ user.cep }}">
 							<label for="inputUser">CEP</label>
 							<button class="button2" type="button" id="search-button"><i class="fa fa-search" aria-hidden="true" 
                             title="Buscar CEP"></i></button>
@@ -168,6 +172,7 @@
 		var envioInfo = {
 			'address':null,
 			'city':null,
+			'district':null,
 			'state': null,
 			'zipcode': null,
 		}
@@ -175,6 +180,7 @@
 		if (envio != 'False'){
 			envioInfo.address = form.address.value
 			envioInfo.city = form.city.value
+			envioInfo.district = form.district.value
 			envioInfo.state = form.state.value
 			envioInfo.zipcode = form.zipcode.value
 		}
@@ -204,5 +210,62 @@
 			window.location.href = "{% url 'home' %}"
 		})
 	}
+</script>
+
+<script type="text/javascript">
+    var button = document.getElementById("search-button");
+	const cepInput = document.getElementById("cep-input");
+	const errorMessage = document.getElementById("error-message");
+
+	cepInput.addEventListener("input", function () {
+		if (cepInput.value.length === 8) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `https://cep.awesomeapi.com.br/json/${cepInput.value}`);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          errorMessage.style.display = "none";
+          	document.getElementById("address").value = data.address;
+			document.getElementById("city").value = data.city;
+			document.getElementById("district").value = data.district;
+			document.getElementById("state").value = data.state;
+        } else {
+          errorMessage.style.display = "block";
+          errorMessage.textContent = "CEP inválido";
+        }
+      }
+    };
+    xhr.send();
+	}
+	cepInput.value = cepInput.value.replace(/[^0-9]/g, "");
+	if (cepInput.value.length > 8) {
+    cepInput.value = cepInput.value.slice(0, 8);
+  	}
+	});
+        
+        button.onclick = function() {
+            var cep = document.getElementById("cep-input").value;
+			if (cep.length < 8) {
+                alert("CEP inválido. Por favor, insira um CEP válido com 8 dígitos.");
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://cep.awesomeapi.com.br/json/' + cep);
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                document.getElementById("address").value = data.address;
+                document.getElementById("city").value = data.city;
+                document.getElementById("state").value = data.state;
+                console.log(data)
+                console.log(data.address)
+                console.log(data.city)
+                console.log(data.state)
+            }
+            };
+            xhr.send();
+        }
+
 </script>
 {% endblock %}

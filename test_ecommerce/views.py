@@ -96,6 +96,7 @@ def processo_pedido(request):
                 pedido=pedido,
                 endereco=data['envio']['address'],
                 cidade=data['envio']['city'],
+                bairro=data['envio']['district'],
                 estado=data['envio']['state'],
                 cep=data['envio']['zipcode'],
                 )

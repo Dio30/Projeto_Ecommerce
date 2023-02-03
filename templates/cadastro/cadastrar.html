@@ -73,7 +73,7 @@
                                 {% endif %}
                                 <p class="text_muted2">Insira um email valido. Ex: exemplo@exemplo.com</p>
                             </div>
-
+                            <p id="error-message" style="display: none;"></p>
                             <div class="form-label-group">
                                 <span class="fa fa-map-marker envelope3"></span>
                                 <input type="text" name='cep' class="form-control" id="cep-input" 
@@ -98,6 +98,14 @@
                                 placeholder="Cidade" autocapitalize= "off" required>
                                 <label for="inputUser">Cidade</label>
                                 <p class="text_muted2">{{ form.cidade.help_text }}</p>
+                            </div>
+
+                            <div class="form-label-group">
+                                <span class="fa fa-map-marker envelope3"></span>
+                                <input type="text" name="bairro" class="form-control" id="district" value=''
+                                placeholder="Cidade" autocapitalize= "off" required>
+                                <label for="inputUser">Bairro</label>
+                                <p class="text_muted2">{{ form.bairro.help_text }}</p>
                             </div>
 
                             <div class="form-label-group">
@@ -165,4 +173,62 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var button = document.getElementById("search-button");
+    const cepInput = document.getElementById("cep-input");
+	const errorMessage = document.getElementById("error-message");
+
+	cepInput.addEventListener("input", function () {
+        if (/^\d{0,8}$/.test(cepInput.value)) {
+		if (cepInput.value.length === 8) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `https://cep.awesomeapi.com.br/json/${cepInput.value}`);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          errorMessage.style.display = "none";
+          	document.getElementById("address").value = data.address;
+			document.getElementById("city").value = data.city;
+            document.getElementById("district").value = data.district;
+			document.getElementById("state").value = data.state;
+        } else {
+          errorMessage.style.display = "block";
+          errorMessage.textContent = "CEP inválido!";
+        }
+      }
+    };
+    xhr.send();
+	}
+    }
+    else{
+        errorMessage.style.display = "block";
+        errorMessage.textContent = "Digite apenas números!";
+        cepInput.value = cepInput.value.replace(/[^\d]/g, "");
+    }
+    })
+        
+        button.onclick = function() {
+            var cep = document.getElementById("cep-input").value;
+            if (cep.length < 8) {
+                alert("CEP inválido. Por favor, insira um CEP válido com 8 dígitos.");
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://cep.awesomeapi.com.br/json/' + cep);
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                document.getElementById("address").value = data.address;
+                document.getElementById("city").value = data.city;
+                document.getElementById("state").value = data.state;
+                console.log(data)
+                console.log(data.address)
+                console.log(data.city)
+                console.log(data.state)
+            }
+            };
+            xhr.send();
+        }
+</script>
 {% endblock %}
