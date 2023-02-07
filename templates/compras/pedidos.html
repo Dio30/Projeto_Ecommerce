@@ -85,7 +85,7 @@
 
 		{% for item in itens %}
 		<center><div class="cart-row">
-			<div style="flex:1"><img class="row-image" src="{{ item.produto.image_url }}"></div>
+			<div style="flex:1"><img class="row-image" src="{{ item.produto.image_url|default_if_none:'/static/imagens/2+placeholder.png' }}"></div>
 			<div style="flex:1"><p>{{ item.produto.nome }}</p></div>
 			<div style="flex:1"><p>R$ {{ item.produto.preco }}</p></div>
 			{% if item.quantidade <= 1 %}
@@ -98,6 +98,9 @@
 
 			<h5>Itens: {{ pedido.pegar_carrinho_itens }}</h5>
 			<h5>Total: R$ {{ pedido.pegar_carrinho_total }}</h5>
+			<br>
+			<b><p>Email para teste:</b> sb-zx8so23993515@personal.example.com</p>
+			<b><p>Senha:</b> 3RS,XIx></p>
 			</div>
 		</div>
 	</div>

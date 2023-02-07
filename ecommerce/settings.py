@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from decouple import config
 from django.contrib.messages import constants as messages
+from dj_database_url import parse as dburl
 
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    #meus arquivos
     'test_ecommerce',
     'usuarios',
 ]
@@ -87,12 +90,8 @@ AUTH_USER_MODEL = 'usuarios.User'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3') # para separar o banco de dados na hora de fazer deploy(produção)
+DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl)}
 
 
 # Password validation
@@ -149,6 +148,15 @@ SESSION_COOKIE_AGE = 3600 # tempo que o usuário fica autenticado, depois disso 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_FILE_OVERWRITE = True
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_S3_REGION_NAME = 'us-east-1'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-u47ez924783844@business.example.com' # email de quem vai receber o dinheiro
