@@ -15,6 +15,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunSQL(
+            "CREATE TABLE usuarios (id serial PRIMARY KEY, name text, email text);",
+            "DROP TABLE usuarios;"
+        ),
         migrations.CreateModel(
             name='User',
             fields=[
