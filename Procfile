@@ -1,1 +1,1 @@
-web: gunicorn ecommerce.wsgi && python manage.py makemigrations && python manage.py migrate
+web: python manage.py makemigrations && python manage.py migrate && gunicorn ecommerce.wsgi

@@ -23,5 +23,5 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include(test_ecommerce_urls)),
-    path('', include(usuarios_urls)),
+    path('usuarios/', include(usuarios_urls)),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
