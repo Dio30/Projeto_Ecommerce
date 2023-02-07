@@ -13,7 +13,6 @@ class User(AbstractUser):
     class Meta:
         verbose_name = ("Usuário")
         verbose_name_plural = ("Usuários")
-        swappable = "AUTH_USER_MODEL"
         
     def save(self, *args, **kwargs):
         if not self.slug:
