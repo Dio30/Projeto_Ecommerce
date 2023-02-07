@@ -45,8 +45,6 @@
             <span class="fa fa-map-marker envelope3"></span>
             <input required class="form-control" type="text" name="cep" placeholder="CEP" id="cep-input" value="{{ user.cep }}" maxlength="8">
             <label for="inputUser">CEP</label>
-            <button class="button3" type="button" id="search-button"><i class="fa fa-search" aria-hidden="true" 
-            title="Buscar CEP"></i></button>
             <p class="text_muted2">{{ form.cep.help_text }}</p>
         </div>
 
@@ -79,13 +77,12 @@
             <p class="text_muted2">{{ form.estado.help_text }}</p>
         </div>
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="{% url 'home' %}" class="btn btn-secondary" style="position: absolute; right: 13.5rem;">Voltar</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary mx-4" >Voltar</a>
         <br><br>
     </form>
 </div>
 
 <script type="text/javascript">
-    var button = document.getElementById("search-button");
     const cepInput = document.getElementById("cep-input");
 	const errorMessage = document.getElementById("error-message");
 
@@ -103,49 +100,27 @@
                 document.getElementById("city").value = data.city;
                 document.getElementById("district").value = data.district;
                 document.getElementById("state").value = data.state;
-            } 
+                console.log(data)
+                console.log(data.address)
+                console.log(data.city)
+                console.log(data.state)
+            }
         
         else {
           errorMessage.style.display = "block";
           errorMessage.textContent = "CEP inválido!";
-        
         }
       }
     };
     xhr.send();
 	}
-
     }
     else{
         errorMessage.style.display = "block";
         errorMessage.textContent = "Digite apenas números!";
         cepInput.value = cepInput.value.replace(/[^\d]/g, "");
     }
-    })
-
-        button.onclick = function() {
-            var cep = document.getElementById("cep-input").value;
-            if (cep.length < 8) {
-                alert("CEP inválido. Por favor, insira um CEP válido com 8 dígitos.");
-                return;
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://cep.awesomeapi.com.br/json/' + cep);
-            xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText);
-                document.getElementById("address").value = data.address;
-                document.getElementById("city").value = data.city;
-                document.getElementById("district").value = data.district;
-                document.getElementById("state").value = data.state;
-                console.log(data)
-                console.log(data.address)
-                console.log(data.city)
-                console.log(data.state)
-            }
-            };
-            xhr.send();
-        }
+    });
 </script>
 
 {% endblock %}

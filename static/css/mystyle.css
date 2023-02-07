@@ -6,6 +6,10 @@ h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
 }
 
+.h4{
+  font-size: 120%;
+}
+
 .box-element{
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
 	background-color: #fff;
@@ -66,11 +70,12 @@ h1,h2,h3,h4,h5,h6{
 
 .cart-row{
 	display: flex;
-    align-items: flex-stretch;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ececec;
-
+  align-items: flex-stretch;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+  font-size: 82%;
+  font-weight: bolder;
 }
 
 .quantity{

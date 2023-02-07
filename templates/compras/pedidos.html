@@ -49,10 +49,8 @@
 						</div>
 						<p id="error-message" style="display: none;"></p>
 						<div class="form-label-group">
-							<input required class="form-control" type="text" name="zipcode" placeholder="CEP.." id="cep-input" value="{{ user.cep }}">
+							<input required class="form-control" type="text" name="zipcode" placeholder="CEP.." id="cep-input" value="{{ user.cep }}" maxlength="8">
 							<label for="inputUser">CEP</label>
-							<button class="button2" type="button" id="search-button"><i class="fa fa-search" aria-hidden="true" 
-                            title="Buscar CEP"></i></button>
 						</div>
 					</div>
 
@@ -96,10 +94,14 @@
 		</div></center>
 		{% endfor %}
 
+			{% if pedido.pegar_carrinho_itens <= 1 %}
+			<h5>Item: {{ pedido.pegar_carrinho_itens }}</h5>
+			{% else %}
 			<h5>Itens: {{ pedido.pegar_carrinho_itens }}</h5>
+			{% endif %}
 			<h5>Total: R$ {{ pedido.pegar_carrinho_total }}</h5>
 			<br>
-			<b><p>Email para teste:</b> teste.teste@personal.example.com</p>
+			<b><p>Email para teste de pagamento:</b> teste.teste@personal.example.com</p>
 			<b><p>Senha:</b> 12345678</p>
 			</div>
 		</div>
@@ -156,7 +158,6 @@
 
 	var form = document.getElementById('form')
 	csrftoken = form.getElementsByTagName("input")[0].value
-	console.log('New_token:', form.getElementsByTagName("input")[0].value)
 	form.addEventListener('submit', function(e){
 		e.preventDefault()
 		document.getElementById('form-button').classList.add('hidden');
@@ -216,11 +217,11 @@
 </script>
 
 <script type="text/javascript">
-    var button = document.getElementById("search-button");
 	const cepInput = document.getElementById("cep-input");
 	const errorMessage = document.getElementById("error-message");
 
 	cepInput.addEventListener("input", function () {
+		if (/^\d{0,8}$/.test(cepInput.value)) {
 		if (cepInput.value.length === 8) {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", `https://cep.awesomeapi.com.br/json/${cepInput.value}`);
@@ -233,6 +234,10 @@
 			document.getElementById("city").value = data.city;
 			document.getElementById("district").value = data.district;
 			document.getElementById("state").value = data.state;
+			console.log(data)
+			console.log(data.address)
+			console.log(data.city)
+			console.log(data.state)
         } else {
           errorMessage.style.display = "block";
           errorMessage.textContent = "CEP inválido";
@@ -241,34 +246,13 @@
     };
     xhr.send();
 	}
-	cepInput.value = cepInput.value.replace(/[^0-9]/g, "");
-	if (cepInput.value.length > 8) {
-    cepInput.value = cepInput.value.slice(0, 8);
-  	}
+	}
+	else{
+        errorMessage.style.display = "block";
+        errorMessage.textContent = "Digite apenas números!";
+        cepInput.value = cepInput.value.replace(/[^\d]/g, "");
+    }
 	});
-        
-        button.onclick = function() {
-            var cep = document.getElementById("cep-input").value;
-			if (cep.length < 8) {
-                alert("CEP inválido. Por favor, insira um CEP válido com 8 dígitos.");
-                return;
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://cep.awesomeapi.com.br/json/' + cep);
-            xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText);
-                document.getElementById("address").value = data.address;
-                document.getElementById("city").value = data.city;
-                document.getElementById("state").value = data.state;
-                console.log(data)
-                console.log(data.address)
-                console.log(data.city)
-                console.log(data.state)
-            }
-            };
-            xhr.send();
-        }
 
 </script>
 {% endblock %}
