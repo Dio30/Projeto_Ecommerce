@@ -10,8 +10,8 @@ class EnderecoAdmin(admin.ModelAdmin):
 admin.site.register(EnderecoEnvio, EnderecoAdmin)
 
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ('id_transacao', 'complete', 'cliente', 'data_pedido')
-    readonly_fields = ['id_transacao', 'cliente', 'complete']
+    list_display = ('id_transacao', 'complete', 'data_pedido')
+    readonly_fields = ['id_transacao', 'complete']
 
 admin.site.register(Pedido, PedidoAdmin)
 
