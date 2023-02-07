@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import slugify
@@ -13,6 +14,7 @@ class User(AbstractUser):
     class Meta:
         verbose_name = ("Usuário")
         verbose_name_plural = ("Usuários")
+        swappable = settings.AUTH_USER_MODEL
         
     def save(self, *args, **kwargs):
         if not self.slug:
