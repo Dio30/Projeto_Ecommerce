@@ -1,10 +1,11 @@
 from django.db import models
 from django.conf import settings
+from usuarios.models import User
 
 class Produto(models.Model):
     nome = models.CharField(max_length=200, null=True)
     preco = models.DecimalField(max_digits=7, decimal_places=2)
-    imagem = models.ImageField(null=True, blank=True, upload_to='produtos', default='/s')
+    imagem = models.ImageField(null=True, blank=True, upload_to='produtos')
     digital = models.BooleanField(default=False, null=True, blank=False)
     
     def __str__(self):
