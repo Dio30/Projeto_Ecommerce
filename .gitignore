@@ -2,4 +2,3 @@ Lib
 venv
 Scripts
 .env
-db.sqlite3
