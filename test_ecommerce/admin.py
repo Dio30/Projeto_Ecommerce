@@ -1,10 +1,13 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.register(Produto)
+class ProdutoAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'preco')
+
+admin.site.register(Produto, ProdutoAdmin)
 
 class EnderecoAdmin(admin.ModelAdmin):
-    list_display = ('endereco', 'data_adicao')
+    list_display = ('endereco', 'cliente', 'data_adicao')
     search_fields = ('endereco',)
 
 admin.site.register(EnderecoEnvio, EnderecoAdmin)
@@ -17,5 +20,5 @@ admin.site.register(Pedido, PedidoAdmin)
 
 class PedidoItemAdmin(admin.ModelAdmin):
     readonly_fields = ['produto', 'quantidade', 'pedido']
-    list_display = ('pedido', 'quantidade', 'produto')
+    list_display = ('pedido', 'quantidade', 'produto', 'pegar_total')
 admin.site.register(PedidoItem, PedidoItemAdmin)

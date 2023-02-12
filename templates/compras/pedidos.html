@@ -13,16 +13,18 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="box-element" id="form-wrapper">
-				<form id="form" action="{% url 'pedidos' %}">
+				<form id="form" action="{% url 'pedidos' %}" method="POST">
 					{% csrf_token %}
 					<center><h5>Dados Pessoais</h5></center>
 					<hr>
 					<div id="user-info">
-						<div class="form-field">
+						<div class="form-label-group">
 							<input required class="form-control" type="text" name="name" placeholder="Nome.." value="{{ user.username }}" title="Insira seu nome">
+							<label for="inputUser">Usuário</label>
 						</div>
-						<div class="form-field">
+						<div class="form-label-group">
 							<input required class="form-control" type="email" name="email" placeholder="Email.." value="{{ user.email }}" title="Insira seu email">
+							<label for="inputUser">Email</label>
 						</div>
 					</div>
 					
@@ -108,15 +110,15 @@
 	</div>
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AXUbdkAIbLJ6Njuq4mXVbxCM6AqEGMKQZueHqV6fbuRxOjN20BxOh3kvbsHU_DU-HIcSfV9dKpyzVDn4&currency=BRL&disable-funding=mercadopago"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=Ad3ErborpdH0MI-ucHURKQYTsXnRQaL-Nzwe7aC8-COVwUDjUYqjEvLGGpNIE0B4bLAlDq3_8okUF_Qe&currency=BRL&disable-funding=mercadopago,card"></script>
 
-<script>
-	var total = parseInt('{{ pedido.pegar_carrinho_total }}')
-	const paypalButtonsComponent = paypal.Buttons({
+<script type="text/javascript">
+	var total = '{{ pedido.pegar_carrinho_total|escapejs }}'
+	paypal.Buttons({
 		// optional styling for buttons
 		// https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
 		style: {
-		  color: "gold",
+		  color: "blue",
 		  shape: "rect",
 		  layout: "vertical"
 		},
@@ -126,12 +128,13 @@
 				purchase_units: [
 					{
 						amount: {
-							value: parseFloat(total).toFixed(2)
+							value: total
 						}
 					}
 				]
 			};
-
+			console.log(total)
+			console.log(createOrderPayload)
 			return actions.order.create(createOrderPayload);
 		},
 
@@ -165,7 +168,6 @@
 	})
 
 	function submitFormData(){
-		console.log('Botao de pagamento ativado')
 
 		var userFormData = {
 			'name':null,

@@ -19,7 +19,7 @@
                         <h2 class="font-weight-dark text-center">Login | Ecommerce</h2>
                     </div>
                     <div class="card-body mybody">
-                        <form method="POST" autocomplete="off">
+                        <form method="POST" autocomplete="off" action="{% url 'login' %}">
                             {% csrf_token %}
 
                                 {% if form.non_field_errors %}

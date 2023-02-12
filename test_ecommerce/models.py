@@ -2,8 +2,8 @@ from django.db import models
 from django.conf import settings
 
 class Produto(models.Model):
-    nome = models.CharField(max_length=200, null=True)
-    preco = models.DecimalField(max_digits=7, decimal_places=2)
+    nome = models.CharField(max_length=200, null=True, verbose_name='Produto')
+    preco = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Preço (R$)')
     imagem = models.ImageField(null=True, blank=True, upload_to='produtos')
     digital = models.BooleanField(default=False, null=True, blank=False)
     
@@ -75,3 +75,7 @@ class EnderecoEnvio(models.Model):
     
     def __str__(self):
         return self.endereco
+    
+    class Meta:
+        verbose_name = 'endereço enviado'
+        verbose_name_plural = 'endereços enviados'
