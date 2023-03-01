@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div id="loader" class="loader">
+    <div class="spinner"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const loaderContainer = document.querySelector('#loader');
+      loaderContainer.classList.add('d-none'); /* esconde o loader após a página carregar */
+    });
+    
+    window.addEventListener('beforeunload', function() {
+      const loaderContainer = document.querySelector('#loader');
+      loaderContainer.classList.remove('d-none'); /* exibe o loader antes de descarregar a página */
+    });
+</script>
+{% endblock %}

@@ -8,6 +8,8 @@
 
 {% include 'navbar.html' %}
 
+{% include 'loader.html' %}
+
 <center><h3>Pedidos</h3></center>
 <div class="container">
 	<div class="row">
@@ -110,7 +112,7 @@
 	</div>
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=Ad3ErborpdH0MI-ucHURKQYTsXnRQaL-Nzwe7aC8-COVwUDjUYqjEvLGGpNIE0B4bLAlDq3_8okUF_Qe&currency=BRL&disable-funding=mercadopago,card"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AXUbdkAIbLJ6Njuq4mXVbxCM6AqEGMKQZueHqV6fbuRxOjN20BxOh3kvbsHU_DU-HIcSfV9dKpyzVDn4&currency=BRL&disable-funding=mercadopago,card"></script>
 
 <script type="text/javascript">
 	var total = '{{ pedido.pegar_carrinho_total|escapejs }}'
