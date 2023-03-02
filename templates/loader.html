@@ -1,20 +1,17 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block main %}
 
-<div id="loader" class="loader">
-    <div class="spinner"></div>
+<div id="loader">
+  <img src="{% static 'imagens/Shopping cart.gif' %}" alt="Loading...">
 </div>
 
 <script type="text/javascript">
-    document.addEventListener("DOMContentLoaded", function() {
-      const loaderContainer = document.querySelector('#loader');
-      loaderContainer.classList.add('d-none'); /* esconde o loader após a página carregar */
-    });
-    
-    window.addEventListener('beforeunload', function() {
-      const loaderContainer = document.querySelector('#loader');
-      loaderContainer.classList.remove('d-none'); /* exibe o loader antes de descarregar a página */
+ window.addEventListener("load", function() {
+      const loader = document.getElementById("loader");
+      loader.style.display = "none";
     });
 </script>
 {% endblock %}
