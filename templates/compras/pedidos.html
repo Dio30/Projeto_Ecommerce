@@ -162,7 +162,6 @@
 	}
 
 	var form = document.getElementById('form')
-	csrftoken = form.getElementsByTagName("input")[0].value
 	form.addEventListener('submit', function(e){
 		e.preventDefault()
 		document.getElementById('form-button').classList.add('hidden');
