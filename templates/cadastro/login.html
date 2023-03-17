@@ -35,13 +35,14 @@
                             <div class="form-label-group">
                                 <span class="fa fa-user user"></span>
                                 <input name="username" type="text" placeholder="Usuário" class="form-control" 
-                                autocapitalize= "off" autofocus required>
+                                autocapitalize= "off" value="{{ form.data.username }}" autofocus required>
                                 <label>Usuário</label>
                             </div>
 
                             <div class="form-label-group">
                                 <span class="fa fa-lock"></span>
-                                <input name="password" type="password" placeholder="Senha" id="senha" class="form-control" required>
+                                <input name="password" type="password" placeholder="Senha" id="senha" class="form-control" 
+                                value="{{ form.data.password }}" required>
                                 <label>Senha</label>
                                 <img src="{% static 'imagens/eye.svg' %}" class="icon" onclick="mostrarSenha()">
                             </div>

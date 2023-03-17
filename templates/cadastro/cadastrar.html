@@ -26,7 +26,7 @@
                             <div class="form-label-group">
                                 <span class="fa fa-user user"></span>
                                 <input type="text" name="username" minlength="3" class="form-control" id="inputUser" spellcheck="off" 
-                                placeholder="Usuário" autocapitalize= "off" autofocus required>
+                                placeholder="Usuário" autocapitalize= "off" value="{{ form.data.username }}" autofocus required>
                                 <label for="inputUser">Usuário</label>
                                 {% if form.username.errors %}
                                   <style>
@@ -52,7 +52,7 @@
                             <div class="form-label-group1">
                                 <span class="fa fa-envelope envelope3"></span>
                                 <input type="email" name="email" class="form-control" id="inputUser" 
-                                placeholder="Email" autocapitalize= "off" value="@gmail.com">
+                                placeholder="Email" autocapitalize= "off" value="{{ form.data.email }}">
                                 <label for="inputUser">Email</label>
                                 
                                 {% if form.email.errors %}
@@ -75,42 +75,43 @@
                                 {% endif %}
                                 <p class="text_muted2">Insira um email valido. Ex: exemplo@exemplo.com</p>
                             </div>
+
                             <p id="error-message" style="display: none;"></p>
-                            <div class="form-label-group">
-                                <span class="fa fa-map-marker envelope3"></span>
+                            <div class="form-label-group3">
+                                <span class="fa fa-map-marker envelope4"></span>
                                 <input type="text" name='cep' class="form-control" id="cep-input" 
-                                placeholder="CEP" autocapitalize= "off" maxlength="8" required>
+                                placeholder="CEP" autocapitalize= "off" maxlength="8" value="{{ form.data.cep }}" required>
                                 <label for="inputUser">CEP</label>
                                 <p class="text_muted2">{{ form.cep.help_text }}</p>
                             </div>
 
-                            <div class="form-label-group">
-                                <span class="fa fa-map-marker envelope3"></span>
-                                <input type="text" name="endereco" class="form-control" id="address" value=''
+                            <div class="form-label-group3">
+                                <span class="fa fa-map-marker envelope4"></span>
+                                <input type="text" name="endereco" class="form-control" id="address" value='{{ form.data.endereco }}'
                                 placeholder="Endereço" autocapitalize= "off" required>
                                 <label for="inputUser">Endereço</label>
                                 <p class="text_muted2">{{ form.endereco.help_text }}</p>
                             </div>
 
-                            <div class="form-label-group">
-                                <span class="fa fa-map-marker envelope3"></span>
-                                <input type="text" name="cidade" class="form-control" id="city" value=''
+                            <div class="form-label-group3">
+                                <span class="fa fa-map-marker envelope4"></span>
+                                <input type="text" name="cidade" class="form-control" id="city" value='{{ form.data.cidade }}'
                                 placeholder="Cidade" autocapitalize= "off" required>
                                 <label for="inputUser">Cidade</label>
                                 <p class="text_muted2">{{ form.cidade.help_text }}</p>
                             </div>
 
-                            <div class="form-label-group">
-                                <span class="fa fa-map-marker envelope3"></span>
-                                <input type="text" name="bairro" class="form-control" id="district" value=''
+                            <div class="form-label-group3">
+                                <span class="fa fa-map-marker envelope4"></span>
+                                <input type="text" name="bairro" class="form-control" id="district" value='{{ form.data.bairro }}'
                                 placeholder="Cidade" autocapitalize= "off" required>
                                 <label for="inputUser">Bairro</label>
                                 <p class="text_muted2">{{ form.bairro.help_text }}</p>
                             </div>
 
-                            <div class="form-label-group">
-                                <span class="fa fa-map-marker envelope3"></span>
-                                <input type="text" name="estado" class="form-control" id="state" value=''
+                            <div class="form-label-group3">
+                                <span class="fa fa-map-marker envelope4"></span>
+                                <input type="text" name="estado" class="form-control" id="state" value='{{ form.data.estado }}'
                                 placeholder="Estado" autocapitalize= "off" required>
                                 <label for="inputUser">Estado</label>
                                 <p class="text_muted2">{{ form.estado.help_text }}</p>
@@ -119,7 +120,7 @@
                             <div class="form-label-group2">
                                 <span class="fa fa-lock"></span>
                                 <input type="password" name="password1" class="form-control" id="senha1" 
-                                placeholder="Senha" required>
+                                placeholder="Senha" value="{{ form.data.password1 }}" required>
                                 <label>Senha</label>
                                 <img src="{% static 'imagens/eye.svg' %}" class="icon" onclick="mostrarSenha1()">
                                 <ul class="text_muted2" style="margin-top: 1rem;">
@@ -134,7 +135,7 @@
                             <div class="form-label-group2">
                                 <span class="fa fa-lock"></span>
                                 <input type="password" name="password2" class="form-control" id="senha2" 
-                                placeholder="Confirme sua senha" required>
+                                placeholder="Confirme sua senha" value="{{ form.data.password2 }}" required>
                                 <label>Confirmar Senha</label>
                                 <img src="{% static 'imagens/eye.svg' %}" class="icon" id="icon" onclick="mostrarSenha2()">
                                 <p class="text_muted2">Informe a mesma senha informada anteriormente, para verificação.</p>

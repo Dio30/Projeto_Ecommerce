@@ -10,31 +10,20 @@ h1,h2,h3,h4,h5,h6{
   font-size: 120%;
 }
 
-.loader {
+#loader {
   position: fixed;
   z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.7);
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -20px 0 0 -20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 5px solid #333;
-  border-top-color: #fff;
-  animation: spinner 1s ease-in-out infinite;
-}
-
-@keyframes spinner {
-  to {transform: rotate(360deg);}
+#loader img {
+  width: 100px;
 }
 
 .box-element{
@@ -408,6 +397,12 @@ h1,h2,h3,h4,h5,h6{
 }
   
 .envelope3{ /* icon email na registro */
+  position: absolute;
+  top: .99rem;
+  left: 10px;
+}
+
+.envelope4{ /* icon email na registro */
   position: absolute;
   top: .99rem;
   left: 10px;
@@ -799,5 +794,118 @@ color: #000000;
 
   .form-label-group2 input::-ms-input-placeholder { /* suporte para o login dinamico */
     color: #777;
+  }
+}
+
+.form-label-group3{ /* suporte para o login dinamico */
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-label-group3 input:hover{ /* para quando passar o mouse no campo selecionado */
+background: #eeeded;
+color: #000000;
+}
+
+.form-label-group3 input,
+.form-label-group3 label { /* suporte para o login dinamico */
+  height: 3.125rem;
+  padding: .75rem;
+  padding-right: 50px;
+  padding-left: 30px;
+  border-radius: 15px;
+}
+
+.form-label-group3 label { /* suporte para o login dinamico */
+  position: absolute;
+  top: 0px;
+  left: 1px;
+  display: block;
+  width: 100%;
+  margin-bottom: 0; /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495657;
+  pointer-events: none;
+  cursor: text; /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: 1.25rem;
+  transition: all .1s ease-in-out;
+  font-size: 90%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-label-group3 input::-webkit-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group3 input::-moz-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group3 input:-ms-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group3 input::-ms-input-placeholder { /* suporte para o login dinamico */
+  color: transparent;
+}
+
+.form-label-group3 input::placeholder { /* suporte para o login dinamico */
+  color: transparent;
+  
+}
+
+.form-label-group3 input:not(:-moz-placeholder-shown) { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group3 input:not(:-ms-input-placeholder) { /* suporte para o login dinamico */
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group3 input:not(:placeholder-shown) { /* suporte para o login dinamico */
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group3 input:not(:-moz-placeholder-shown) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group3 input:not(:-ms-input-placeholder) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group3 input:not(:placeholder-shown) ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 13px;
+  font-weight: bold;
+  color: #777;
+}
+
+.form-label-group3 input:-webkit-autofill ~ label { /* suporte para o login dinamico */
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+@supports (-ms-ime-align: auto) { /* suporte para o login dinamico */
+  .form-label-group3 { /* suporte para o login dinamico */
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
   }
 }
