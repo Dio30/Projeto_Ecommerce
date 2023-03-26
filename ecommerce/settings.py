@@ -165,7 +165,6 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" # emails em produção
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') #senha criada no app no gmail em autenticação em 2 fatores
 EMAIL_USE_TLS = True
