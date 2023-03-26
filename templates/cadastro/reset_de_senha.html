@@ -1,0 +1,13 @@
+{% autoescape off %}
+    Olá {{ user.username }}
+
+    Seu nome de usuário: {{ user.username }}
+
+    Você excedeu o numero de tentativas de login.
+    Por favor utilize esse link para resetar a sua senha:
+
+    {{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+    Atenciosamente
+    Equipe My Ecommerce
+{% endautoescape %}

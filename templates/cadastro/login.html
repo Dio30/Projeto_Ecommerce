@@ -24,11 +24,9 @@
                         <form method="POST" autocomplete="off" action="{% url 'login' %}">
                             {% csrf_token %}
 
-                                {% if form.non_field_errors %}
+                                {% if form.errors %}
                                     {% for error in form.non_field_errors %}
-                                    <div class="alert alert-danger" role="alert">
-                                        Usuário ou senha incorretos, tente novamente.
-                                    </div>
+                                    <p class="alert alert-danger" role="alert">{{ error }}</p>
                                     {% endfor %}
                                 {% endif %}
 
@@ -45,6 +43,7 @@
                                 value="{{ form.data.password }}" required>
                                 <label>Senha</label>
                                 <img src="{% static 'imagens/eye.svg' %}" class="icon" onclick="mostrarSenha()">
+                                <a href="{% url 'email_reset_senha' %}">Esqueceu a Senha?</a>
                             </div>
                             <center><button type="submit" class="btn btn-lg btn-dark mybtn btn_submit">Entrar
                                 <span></span>

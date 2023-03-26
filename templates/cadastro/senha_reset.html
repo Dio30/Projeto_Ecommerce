@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Email para Reset de Senha {% endblock %}
+
+{% block main %}
+
+{% include 'loader.html' %}
+
+{% include 'navbar.html' %}
+
+{% include 'mensagens.html' %}
+
+<div class="form-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card shadow-lg border-1 rounded-lg mt-5">
+                    <div class="card-header justify-content-center mycardheader">
+                        <h2 class="font-weight-dark text-center">Redefinir Senha pelo Email</h2>
+                    </div>
+                    <div class="card-body mybody">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="form-label-group">
+                                <span class="fa fa-envelope envelope3"></span>
+                                {{ form.email }}
+                                <label>Email</label>
+
+                                {% if form.email.errors %}
+                                <style>
+                                    .form-label-group .form-control {
+                                        border: 3px solid #e11010;
+                                    }
+
+                                    .envelope3{
+                                        color: #e11010;
+                                    }
+                                    .form-label-group label{
+                                        position: absolute;
+                                        left: 3px;
+                                    }
+
+                                </style>
+                                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                
+                                    {% for error in form.email.errors %}
+                                        <font class='mytext'>{{ error }}</font>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <button type='submit' class="btn btn-primary btn-sm mybtn btn_submit">Enviar
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <a href="{% url 'login' %}" class="btn btn-dark mx-3 mybtn" style="position:absolute; right: 4px;">Voltar</a>
+                            </form>
+                            <br>
+                            <p class="p">Por favor insira um email cadastrado, caso não tenha e 
+                                esqueceu a senha terá que fazer um novo cadastro com um email valido <a href="{% url 'cadastrar' %}" 
+                                class="super_a">clicando aqui</a>.
+                            </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

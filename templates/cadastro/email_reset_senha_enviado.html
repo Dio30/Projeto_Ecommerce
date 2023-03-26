@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Reset de Senha {% endblock %}
+
+{% block main %}
+
+{% include 'loader.html' %}
+
+{% include 'navbar.html' %}
+
+{% include 'mensagens.html' %}
+
+<div class="form-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="card shadow-lg border-1 rounded-lg my-4">
+                    <div class="card-header justify-content-center mycardheader">
+                        <h2 class="font-weight-dark text-center">Confirmação de alteração de senha</h2>
+                    </div>
+                    <div class="card-body mybody">
+                        <font size=4><p>Foi enviado para o seu email um link para confirmação de alteração de senha.</p></font>
+                        <center><a href="{% url 'login' %}" class="btn btn-primary mybtn">Voltar</a></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

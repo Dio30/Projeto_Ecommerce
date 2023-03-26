@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.dispatch import receiver
 from django.template.defaultfilters import slugify
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from .signals import user_login_password_failed
 
 class User(AbstractUser):
     endereco = models.CharField(max_length=100, help_text='Insira o seu endereço.', null=True, blank=True)
@@ -22,3 +25,40 @@ class User(AbstractUser):
         else:
             self.slug = slugify(self.username)
         return super().save(*args, **kwargs)
+
+class AuditEntry(models.Model):
+    action = models.CharField(max_length=64)
+    ip = models.GenericIPAddressField(null=True)
+    email = models.CharField(max_length=256, null=True)
+
+    def __unicode__(self):
+        return f'{self.action}-{self.email}-{self.ip}'
+
+    def __str__(self):
+        return f'{self.action}-{self.email}-{self.ip}'
+
+@receiver(user_logged_in)
+def user_logged_in_callback(sender, request, user, **kwargs):
+    ip = request.META.get('REMOTE_ADDR')
+    AuditEntry.objects.create(
+        action='user_logged_in',
+        ip=ip,
+        email=user.email
+    )
+
+@receiver(user_logged_out)
+def user_logged_out_callback(sender, request, user, **kwargs):
+    ip = request.META.get('REMOTE_ADDR')
+    AuditEntry.objects.create(
+        action='user_logged_out',
+        ip=ip,
+        email=user.email
+    )
+
+@receiver(user_login_password_failed)
+def user_login_password_failed(sender, **kwargs):
+    user = kwargs['user']
+    AuditEntry.objects.create(
+        action='user_login_password_failed',
+        email=user.email
+    )

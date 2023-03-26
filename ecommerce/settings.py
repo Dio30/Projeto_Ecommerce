@@ -151,6 +151,7 @@ CSRF_COOKIE_SECURE = True
 CONN_HEALTH_CHECKS = True
 SESSION_COOKIE_SAMESITE = 'None'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+PASSWORD_RESET_TIMEOUT = 3600 # tempo que o link para resetar o email fica ativo (1 hora)
 
 AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
@@ -160,6 +161,16 @@ AWS_DEFAULT_ACL = None
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 AWS_S3_REGION_NAME = 'us-east-1'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" # emails em produção
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') #senha criada no app no gmail em autenticação em 2 fatores
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
 
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-u47ez924783844@business.example.com' # email de quem vai receber o dinheiro
