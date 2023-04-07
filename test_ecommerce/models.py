@@ -2,9 +2,9 @@ from django.db import models
 from django.conf import settings
 
 class Produto(models.Model):
-    nome = models.CharField(max_length=200, verbose_name='Produto')
+    nome = models.CharField(max_length=200, null=True, verbose_name='Produto')
     preco = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Preço (R$)')
-    detalhes = models.CharField(max_length=200)
+    detalhes = models.CharField(max_length=200, null=True)
     imagem = models.ImageField(null=True, blank=True, upload_to='produtos')
     digital = models.BooleanField(default=False, null=True, blank=False)
     
