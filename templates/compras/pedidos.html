@@ -99,11 +99,11 @@
 		{% endfor %}
 
 			{% if pedido.pegar_carrinho_itens <= 1 %}
-			<h5>Item: {{ pedido.pegar_carrinho_itens }}</h5>
+			<p><b>Item: {{ pedido.pegar_carrinho_itens }}</b></p>
 			{% else %}
-			<h5>Itens: {{ pedido.pegar_carrinho_itens }}</h5>
+			<p><b>Itens: {{ pedido.pegar_carrinho_itens }}</b></p>
 			{% endif %}
-			<h5>Total: R$ {{ pedido.pegar_carrinho_total }}</h5>
+			<b><p>Total: R$ {{ pedido.pegar_carrinho_total }}</p></b>
 			<br>
 			<b><p>Email para teste de pagamento:</b> teste.teste@personal.example.com</p>
 			<b><p>Senha:</b> 12345678</p>
