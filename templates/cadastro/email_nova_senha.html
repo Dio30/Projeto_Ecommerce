@@ -28,10 +28,10 @@
 
                             <div class="form-label-group">
                                 <span class="fa fa-lock"></span>
-                                <input name='new_password1' type="password" id="senha" class="form-control"
-                                placeholder="Nova Senha" autocomplete="off" required>
+                                <input type="password" name='new_password1' id="senha1" class="form-control"
+                                placeholder="Nova Senha" autocomplete="off" value="{{ form.data.new_password1 }}" required>
                                 <label>Nova Senha</label>
-                                <img src="{% static 'imagens/eye.svg' %}" class="icon" id="icon" onclick="mostrarSenha()">
+                                <img src="{% static 'imagens/eye.svg' %}" class="icon" id="icon" onclick="mostrarSenha1()">
                                 <ul class="text-muted">
                                     <li>Sua senha não pode ser muito parecida com o resto das suas informações pessoais.</li>
                                     <li>Sua senha precisa conter pelo menos 9 caracteres.</li>
@@ -42,10 +42,11 @@
 
                             <div class="form-label-group">
                                 <span class="fa fa-lock"></span>
-                                <input name='new_password2' type="password" id="senha2" class="form-control"
-                                placeholder="Confirmação da senha" autocomplete="off" required>
-                                <label>Confirmar Nova Senha</label>
-                                <img src="{% static 'imagens/eye.svg' %}" class="icon" id="icon" onclick="mostrarSenha2()">
+                                <input type="password" name="new_password2" class="form-control" id="senha" 
+                                placeholder="Confirme sua senha" value="{{ form.data.new_password2 }}" required>
+                                <label>Confirmar Senha</label>
+                                <img id="icone-olho-aberto" class="icon" src="{% static 'imagens/eye.svg' %}" onclick="toggleSenha()">
+                                <img id="icone-olho-fechado" class="icon" src="{% static 'imagens/eye-off.svg' %}" onclick="toggleSenha()" style="display:none;">
                                 
                                 <p class="text-muted">Informe a mesma senha informada anteriormente, para verificação.</p>
                                 {% if form.new_password2.errors %}
@@ -80,6 +81,23 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function toggleSenha() {
+    var senha = document.getElementById("senha");
+    var iconeAberto = document.getElementById("icone-olho-aberto");
+    var iconeFechado = document.getElementById("icone-olho-fechado");
+    if (senha.type == "password") {
+      senha.type = "text";
+      iconeAberto.style.display = "none";
+      iconeFechado.style.display = "inline";
+    } else {
+      senha.type = "password";
+      iconeAberto.style.display = "inline";
+      iconeFechado.style.display = "none";
+    }
+  }
+</script>
 
 {% else %}
 <div class="form-content">

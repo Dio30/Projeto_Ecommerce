@@ -87,6 +87,11 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 AUTH_USER_MODEL = 'usuarios.User'
 
+AUTHENTICATION_BACKENDS = [
+    'usuarios.autenticate.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -103,6 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',

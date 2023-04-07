@@ -10,8 +10,8 @@ admin.site.register(User, UserADM)
 
 
 class AuditEntryAdmin(admin.ModelAdmin):
-    list_display = ('action', 'email', 'ip')
+    list_display = ('action', 'email', 'ip', 'data')
     list_filter = ('action',)
-    readonly_fields = ('action', 'email', 'ip')
+    readonly_fields = ('action', 'email', 'ip', 'data')
     
 admin.site.register(AuditEntry, AuditEntryAdmin)

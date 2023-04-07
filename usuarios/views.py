@@ -11,6 +11,7 @@ from .signals import user_login_password_failed
 from .services import send_mail_to_user_reset_password
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import PasswordResetView
+from django.db.models import Q
 
 class UsuariosViews(SuccessMessageMixin, CreateView):
     template_name = 'cadastro/cadastrar.html'
@@ -24,8 +25,8 @@ class UsuariosChangeView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = "Endereço editado com sucesso!"
     success_url = reverse_lazy('home')
     
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(User, slug=self.kwargs['slug'], username=self.request.user)
+    def get_object(self):
+        self.object = get_object_or_404(User, slug=self.kwargs['slug'], username=self.request.user.username)
         return self.object
 
 class MyLoginView(LoginView):
@@ -37,22 +38,27 @@ class MyLoginView(LoginView):
 
         if username:
             try:
-                user = User.objects.get(username=username)
+                user = User.objects.get(Q(email__iexact=username) | Q(username__iexact=username))
 
                 for error in form.errors.as_data()['__all__']:
                     if error.code == 'max_attempt':
                         # Envia email para o usuário resetar a senha.
                         send_mail_to_user_reset_password(self.request, user)
+                        
+                        # Reinicia o contador de tentativas
+                        audit = AuditEntry.objects.filter(
+                            email = user.email,
+                            action='user_login_password_failed')
+                        audit.delete()
 
             except User.DoesNotExist:
                 pass
+            
             else:
-                # Dispara o signal quando o usuário existe, mas a senha está errada.
                 user_login_password_failed.send(
                     sender=__name__,
                     request=self.request,
-                    user=user
-                )
+                    user=user)
 
         return self.render_to_response(self.get_context_data(form=form))
 
@@ -63,10 +69,10 @@ class MyLoginView(LoginView):
         auth_login(self.request, user)
 
         # Zera o AuditEntry
-        AuditEntry.objects.filter(
+        audit = AuditEntry.objects.filter(
             email=user.email,
-            action='user_login_password_failed'
-        ).delete()
+            action='user_login_password_failed')
+        audit.delete()
 
         return HttpResponseRedirect(self.get_success_url())
 

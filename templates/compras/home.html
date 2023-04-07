@@ -12,7 +12,7 @@
 
 {% include 'loader.html' %}
 
-<center><h1>Bem vindo</h1></center>
+<h1>Bem vindo</h1>
 <div class="container">
     <div class="row">
         {% for produto in produtos %}
@@ -23,7 +23,28 @@
 				<hr>
 
 				<button data-product="{{ produto.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add ao carrinho</button>
-				<a class="btn btn-outline-success" href="#">Detalhes</a>
+                
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#staticBackdrop{{ produto.pk }}">
+                    Detalhes
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop{{ produto.pk }}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">{{ produto.nome }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            {{ produto.detalhes }} por R$ {{ produto.preco }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				<h4 class="h4" style="float: right"><strong>R$ {{ produto.preco }}</strong></h4>
             </div>
         </div>

@@ -4,10 +4,26 @@ body{
 
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
+  text-align: center;
 }
 
 .h4{
   font-size: 120%;
+}
+
+.modal-header {
+  background-color: #c9c7c7;
+}
+
+.modal-title{
+  font-weight: bolder;
+  color: #000000;
+}
+
+.modal-body{
+  background-color: #7b7b7b;
+  font-weight: bolder;
+  color: #000000;
 }
 
 #loader {

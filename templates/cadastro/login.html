@@ -12,6 +12,9 @@
 
 {% include 'mensagens.html' %}
 
+{% if user.is_authenticated %}
+<h1>Clique em <a href="{% url 'home' %}">aqui</a></h1>.
+{% else %}
 <div class="form-content">
     <div class="container">
         <div class="row justify-content-center">
@@ -26,15 +29,15 @@
 
                                 {% if form.errors %}
                                     {% for error in form.non_field_errors %}
-                                    <p class="alert alert-danger" role="alert">{{ error }}</p>
+                                        <p class="alert alert-danger" role="alert">{{ error }}</p>
                                     {% endfor %}
                                 {% endif %}
-
+                                
                             <div class="form-label-group">
                                 <span class="fa fa-user user"></span>
-                                <input name="username" type="text" placeholder="Usuário" class="form-control" 
+                                <input name="username" type="text" placeholder="Nome ou Email" class="form-control" 
                                 autocapitalize= "off" value="{{ form.data.username }}" autofocus required>
-                                <label>Usuário</label>
+                                <label>{{ form.username.label }}</label>
                             </div>
 
                             <div class="form-label-group">
@@ -61,5 +64,5 @@
         </div>
     </div>
 </div>
-
+{% endif %}
 {% endblock %}
