@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from .models import User, AuditEntry
 from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Q
@@ -88,6 +88,8 @@ class MyAuthenticationForm(AuthenticationForm):
         '''
         Verifica se foi erro de autenticação.
         '''
+        
+        User = get_user_model()
         try:
             user = User.objects.get(Q(email__iexact=username) | Q(username__iexact=username))
         except User.DoesNotExist:

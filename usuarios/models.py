@@ -1,12 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.contrib.auth.signals import user_logged_in, user_logged_out
-from .signals import user_login_password_failed, email_login_failed
+from .signals import user_login_password_failed
 from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
+    username = models.CharField(max_length=100, unique=True, verbose_name='Nome do Usuário')
     email = models.EmailField(max_length=100, unique=True)
     endereco = models.CharField(max_length=100, help_text='Insira o seu endereço.', null=True, blank=True)
     cidade = models.CharField(max_length=100, help_text='Insira a sua cidade.', null=True, blank=True)
